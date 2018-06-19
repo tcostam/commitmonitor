@@ -6,6 +6,7 @@
 /staticfiles/*
 /mediafiles/*
 __pycache__/
+.python-version
 
 # coverage result
 .coverage
