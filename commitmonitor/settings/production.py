@@ -11,6 +11,18 @@ SECRET_KEY = config('SECRET_KEY')
 DATABASES = {
     'default': config('DATABASE_URL', cast=db_url),
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': config('DATABASE_NAME'),
+#         'USER': config('DATABESE_USER'),
+#         'PASSWORD': config('DATABASE_PASSWORD'),
+#         'HOST': '',
+#         'PORT': '',
+#     }
+# }
+
 DATABASES['default']['ATOMIC_REQUESTS'] = True
 
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())

@@ -1,5 +1,6 @@
 from .base import *  # noqa
 
+from decouple import config
 
 DEBUG = True
 
@@ -7,10 +8,21 @@ HOST = 'http://localhost:8000'
 
 SECRET_KEY = 'secret'
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': base_dir_join('db.sqlite3'),
+#     }
+# }
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': base_dir_join('db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': config('DATABASE_NAME'),
+        'USER': config('DATABESE_USER'),
+        'PASSWORD': config('DATABASE_PASSWORD'),
+        'HOST': '',
+        'PORT': '',
     }
 }
 

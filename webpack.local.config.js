@@ -30,6 +30,15 @@ baseConfig[1].module.loaders.push({
 {
   test: /\.(woff(2)?|eot|ttf)(\?v=\d+\.\d+\.\d+)?$/,
   loader: 'url-loader?limit=100000',
+},
+{
+  test: /\.otf$/,
+  use: {
+    loader: "url-loader",
+    options: {
+      limit: 50000,
+    },
+  },
 });
 
 baseConfig[1].plugins = [

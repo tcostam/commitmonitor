@@ -2,7 +2,7 @@
 
 import os
 
-from decouple import config  # noqa
+from decouple import config
 
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -22,8 +22,6 @@ ADMINS = (
     ('Tiago Melo', 'tiagodacostamelo@gmail.com'),
 )
 
-AUTH_USER_MODEL = 'users.User'
-
 ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
@@ -37,9 +35,10 @@ INSTALLED_APPS = [
     'django_js_reverse',
     'webpack_loader',
     'import_export',
+    'social_django',
 
     'common',
-    'users',
+    'core',
 ]
 
 MIDDLEWARE = [
@@ -50,6 +49,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    'social_django.middleware.SocialAuthExceptionMiddleware',
 ]
 
 ROOT_URLCONF = 'commitmonitor.urls'
@@ -65,10 +66,26 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+
+                'social_django.context_processors.backends',
+                'social_django.context_processors.login_redirect',
             ],
         },
     },
 ]
+
+LOGIN_URL = 'login'
+LOGOUT_URL = 'logout'
+LOGIN_REDIRECT_URL = 'home'
+SOCIAL_AUTH_GITHUB_KEY = config('DJANGO_SOCIAL_AUTH_GITHUB_KEY')
+SOCIAL_AUTH_GITHUB_SECRET = config('DJANGO_SOCIAL_AUTH_GITHUB_SECRET')
+
+
+AUTHENTICATION_BACKENDS = (
+    'social_core.backends.github.GithubOAuth2',
+
+    'django.contrib.auth.backends.ModelBackend',
+)
 
 WSGI_APPLICATION = 'commitmonitor.wsgi.application'
 

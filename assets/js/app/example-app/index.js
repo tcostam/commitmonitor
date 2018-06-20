@@ -1,3 +1,3 @@
-import ColorChanger from './components';
+import AppContainer from './components';
 
-export default ColorChanger;
+export default AppContainer;

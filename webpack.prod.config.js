@@ -28,6 +28,23 @@ baseConfig[1].module.loaders.push({
 {
   test: /\.(woff(2)?|eot|ttf)(\?v=\d+\.\d+\.\d+)?$/,
   loader: 'file-loader?name=fonts/[name].[ext]',
+},
+{
+  test: /\.otf$/,
+  use: {
+    loader: "url-loader",
+    options: {
+      limit: 50000,
+    },
+  },
+},
+{
+  test: /\.(jpg|png|gif|svg|ico)$/,
+  use: [
+      {
+          loader: 'url-loader'
+      },
+  ]
 });
 
 baseConfig[1].plugins = [
