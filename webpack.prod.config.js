@@ -26,17 +26,8 @@ baseConfig[1].module.loaders.push({
   loaders: ['babel-loader?presets[]=react,presets[]=es2015']
 },
 {
-  test: /\.(woff(2)?|eot|ttf)(\?v=\d+\.\d+\.\d+)?$/,
+  test: /\.(woff(2)?|eot|ttf|otf)(\?v=\d+\.\d+\.\d+)?$/,
   loader: 'file-loader?name=fonts/[name].[ext]',
-},
-{
-  test: /\.otf$/,
-  use: {
-    loader: "url-loader",
-    options: {
-      limit: 50000,
-    },
-  },
 },
 {
   test: /\.(jpg|png|gif|svg|ico)$/,

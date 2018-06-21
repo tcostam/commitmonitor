@@ -28,17 +28,16 @@ baseConfig[1].module.loaders.push({
   loaders: ['react-hot-loader', 'babel-loader?presets[]=react,presets[]=es2015']
 },
 {
-  test: /\.(woff(2)?|eot|ttf)(\?v=\d+\.\d+\.\d+)?$/,
+  test: /\.(woff(2)?|eot|ttf|otf)(\?v=\d+\.\d+\.\d+)?$/,
   loader: 'url-loader?limit=100000',
 },
 {
-  test: /\.otf$/,
-  use: {
-    loader: "url-loader",
-    options: {
-      limit: 50000,
-    },
-  },
+  test: /\.(jpg|png|gif|svg|ico)$/,
+  use: [
+      {
+          loader: 'url-loader'
+      },
+  ]
 });
 
 baseConfig[1].plugins = [
