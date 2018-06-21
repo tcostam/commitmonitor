@@ -1,0 +1,23 @@
+.top-navbar {
+  height: 65px;
+  background-color: #2196f3;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.35);
+
+  > .container {
+    > .logo {
+      font-family: DINNextLTPro;
+      line-height: 65px;
+      font-size: 29px;
+      color: #ffffff;
+      font-weight: 300;
+      -webkit-user-select: none; /* Safari */
+      -moz-user-select: none; /* Firefox */
+      -ms-user-select: none; /* IE10+/Edge */
+      user-select: none; /* Standard */
+
+      span {
+        font-weight: 500;
+      }
+    }
+  }
+}

@@ -3,7 +3,6 @@
 .DS_Store
 .env
 */settings/local.py
-/staticfiles/*
 /mediafiles/*
 __pycache__/
 .python-version
