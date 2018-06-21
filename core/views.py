@@ -3,7 +3,5 @@ from django.shortcuts import render
 
 @login_required
 def home(request):
-    # print(">>>>>>>>")
     # print(request.user.social_auth.get(provider='github').extra_data)
-    # print("<<<<<<<<")
     return render(request, 'core/home.html')
