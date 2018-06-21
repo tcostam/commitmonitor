@@ -59,7 +59,7 @@
     "marked": "^0.3.19",
     "node-sass": "^4.9.0",
     "popper.js": "^1.14.3",
-    "postcss": "^6.0.22",
+    "postcss": "^6.0.23",
     "postcss-loader": "^2.1.5",
     "prop-types": "^15.6.2",
     "react": "^15.6.2",
