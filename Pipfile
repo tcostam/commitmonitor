@@ -1,12 +1,9 @@
 [[source]]
-
 url = "https://pypi.python.org/simple"
 verify_ssl = true
 name = "pypi"
 
-
 [dev-packages]
-
 bandit = "*"
 coverage = "*"
 django-debug-toolbar = "*"
@@ -21,9 +18,7 @@ pylint-django = "*"
 pylint-celery = "*"
 safety = "*"
 
-
 [packages]
-
 django = "*"
 celery = {extras = ["redis"]}
 django-model-utils = "*"
@@ -39,8 +34,7 @@ gunicorn = "*"
 whitenoise = "*"
 psutil = "*"
 ipython = "*"
-
+social-auth-app-django = "*"
 
 [requires]
-
 python_version = "3.6"
