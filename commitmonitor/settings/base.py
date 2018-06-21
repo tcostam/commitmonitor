@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'import_export',
     'social_django',
 
-    'commitmonitor',
+    # 'commitmonitor',
     'common',
     'core',
 ]
