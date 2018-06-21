@@ -25,7 +25,7 @@ DATABASES = {
 
 DATABASES['default']['ATOMIC_REQUESTS'] = True
 
-ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
+ALLOWED_HOSTS = '*' # XXX
 
 STATIC_ROOT = base_dir_join('staticfiles')
 STATIC_URL = '/static/'
@@ -35,11 +35,11 @@ MEDIA_URL = '/media/'
 
 SERVER_EMAIL = 'tiagodacostamelo@gmail.com'
 
-EMAIL_HOST = 'smtp.sendgrid.net'
-EMAIL_HOST_USER = config('SENDGRID_USERNAME')
-EMAIL_HOST_PASSWORD = config('SENDGRID_PASSWORD')
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
+# EMAIL_HOST = 'smtp.sendgrid.net'
+# EMAIL_HOST_USER = config('SENDGRID_USERNAME')
+# EMAIL_HOST_PASSWORD = config('SENDGRID_PASSWORD')
+# EMAIL_PORT = 587
+# EMAIL_USE_TLS = True
 
 # Security
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
@@ -58,15 +58,15 @@ CSRF_COOKIE_HTTPONLY = True
 WEBPACK_LOADER['DEFAULT']['CACHE'] = True
 
 # Celery
-CELERY_BROKER_URL = config('REDIS_URL')
-CELERY_RESULT_BACKEND = config('REDIS_URL')
-CELERY_SEND_TASK_ERROR_EMAILS = True
+# CELERY_BROKER_URL = config('REDIS_URL')
+# CELERY_RESULT_BACKEND = config('REDIS_URL')
+# CELERY_SEND_TASK_ERROR_EMAILS = True
 
 # Whitenoise
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-MIDDLEWARE.insert(  # insert WhiteNoiseMiddleware right after SecurityMiddleware
-    MIDDLEWARE.index('django.middleware.security.SecurityMiddleware') + 1,
-    'whitenoise.middleware.WhiteNoiseMiddleware')
+# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+# MIDDLEWARE.insert(  # insert WhiteNoiseMiddleware right after SecurityMiddleware
+#     MIDDLEWARE.index('django.middleware.security.SecurityMiddleware') + 1,
+#     'whitenoise.middleware.WhiteNoiseMiddleware')
 
 # django-log-request-id
 MIDDLEWARE.insert(  # insert RequestIDMiddleware on the top
