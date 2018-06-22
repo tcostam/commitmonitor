@@ -19,6 +19,10 @@ class TopNavbar extends React.Component {
           <div className="logo">
             <span>commit</span>monitor
           </div>
+          <div className="avatar">
+            <div className="image">
+            </div>
+          </div>
         </div>
       </div>
     );

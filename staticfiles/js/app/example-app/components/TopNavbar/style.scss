@@ -14,9 +14,29 @@
       -moz-user-select: none; /* Firefox */
       -ms-user-select: none; /* IE10+/Edge */
       user-select: none; /* Standard */
+      display: inline-block;
 
       span {
         font-weight: 500;
+      }
+    }
+
+    > .avatar {
+      display: inline-block;
+      position: relative;
+      float: right;
+
+
+      > .image {
+        border-radius: 18px;
+        border: 1px solid white;
+        overflow: hidden;
+        top: 15px;
+        position: relative;
+        height: 36px;
+        width: 36px;
+        background-image: url('https://avatars0.githubusercontent.com/u/3596239?v=4');
+        background-size: contain;
       }
     }
   }
