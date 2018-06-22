@@ -2,6 +2,9 @@ import React from 'react';
 
 import './style.scss';
 
+const avatarStyle = {
+  backgroundImage: 'url(' + context.avatar + ')'
+};
 
 class TopNavbar extends React.Component {
   constructor(props) {
@@ -13,6 +16,8 @@ class TopNavbar extends React.Component {
   }
 
   render() {
+
+
     return (
       <div className="top-navbar">
         <div className="container">
@@ -20,7 +25,7 @@ class TopNavbar extends React.Component {
             <span>commit</span>monitor
           </div>
           <div className="avatar">
-            <div className="image">
+            <div className="image" style={avatarStyle}>
             </div>
           </div>
         </div>
