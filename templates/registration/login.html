@@ -1,6 +1,20 @@
 {% extends 'base.html' %}
 
 {% block body %}
+  <style>
+    .login-form {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: calc(100vh - 65px);
+
+      > .button {
+        max-width: 50%;
+        cursor: pointer;
+        display: inline-block;
+      }
+    }
+</style>
   <div class="login-page">
     <div class="top-navbar">
         <div class="container">
@@ -9,9 +23,10 @@
           </div>
         </div>
     </div>
+
     <div class="login-form">
       <div class="button">
-        {% load static %}
+          {% load static %}
         <a href="{% url 'social:begin' 'github' %}"><img src="{% static "/images/sign-in-with-github.png" %}" srcset="{% static "/images/sign-in-with-github@2x.png" %} 2x" /></a>
       </div>
     </div>
