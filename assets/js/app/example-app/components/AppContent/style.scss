@@ -1,0 +1,21 @@
+.app-content {
+  padding: 52px 0;
+}
+
+.page-header {
+  > .text {
+    font-family: DINNextLTPro;
+    font-size: 29px;
+    font-weight: 500;
+    color: #777777;
+    display: inline-block;
+  }
+
+  > .icon {
+    bottom: 4px;
+    position: relative;
+    margin-left: 12px;
+    cursor: pointer;
+    display: inline-block;
+  }
+}

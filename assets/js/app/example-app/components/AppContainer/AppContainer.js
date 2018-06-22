@@ -3,7 +3,7 @@ import React from 'react';
 
 import './style.scss';
 import TopNavbar from '../TopNavbar';
-import LoginForm from '../LoginForm';
+import AppContent from '../AppContent';
 
 
 class AppContainer extends React.Component {
@@ -19,7 +19,7 @@ class AppContainer extends React.Component {
     return (
       <div className="main-container">
         <TopNavbar />
-        {/* <AppContent /> */}
+        <AppContent />
       </div>
     );
   }
