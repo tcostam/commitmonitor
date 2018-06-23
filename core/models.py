@@ -9,3 +9,13 @@ class UserProfile(models.Model):
     github_login = models.CharField(max_length=255, blank=True)
     github_avatar_url = models.CharField(max_length=255, blank=True)
     github_html_url = models.CharField(max_length=255, blank=True)
+
+
+class Repository(models.Model):
+    user_profile = models.ForeignKey('UserProfile', related_name='repositories', on_delete=models.CASCADE)
+    name = models.CharField(max_length=255, blank=True)
+    full_name = models.CharField(max_length=255, blank=True)
+    description = models.CharField(max_length=255, blank=True)
+    github_html_url = models.CharField(max_length=255, blank=True)
+    owner_github_login = models.CharField(max_length=255, blank=True)
+    owner_avatar_url = models.CharField(max_length=255, blank=True)

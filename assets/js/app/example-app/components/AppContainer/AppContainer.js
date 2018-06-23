@@ -4,6 +4,7 @@ import React from 'react';
 import './style.scss';
 import TopNavbar from '../TopNavbar';
 import AppContent from '../AppContent';
+import RepositoryModal from '../RepositoryModal';
 
 
 class AppContainer extends React.Component {
@@ -20,6 +21,7 @@ class AppContainer extends React.Component {
       <div className="main-container">
         <TopNavbar />
         <AppContent />
+        <RepositoryModal />
       </div>
     );
   }

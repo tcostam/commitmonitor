@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'webpack_loader',
     'import_export',
     'social_django',
+    'rest_framework',
 
     'common',
     'core',
@@ -148,3 +149,15 @@ SOCIAL_AUTH_PIPELINE = (
     'social_core.pipeline.user.user_details',
     'core.pipeline.save_profile',
 )
+
+# Django REST framework
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.SessionAuthentication',
+    ),
+    # Use Django's standard `django.contrib.auth` permissions,
+    # or allow read-only access for unauthenticated users.
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated'
+    ]
+}

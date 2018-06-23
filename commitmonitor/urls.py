@@ -4,6 +4,10 @@ from django.contrib import admin
 from core import views as core_views
 from django.views.generic import TemplateView
 from django.contrib.auth import views as auth_views
+from core.models import UserProfile, Repository
+
+from rest_framework import routers
+from core import views as api_views
 
 
 import django_js_reverse.views
@@ -24,3 +28,15 @@ if settings.DEBUG:
     urlpatterns = [
         url(r'^__debug__/', include(debug_toolbar.urls)),
     ] + urlpatterns
+
+# Routers
+router = routers.DefaultRouter()
+router.register(r'userprofiles', api_views.UserProfileViewSet)
+router.register(r'repositories', api_views.RepositoryViewSet)
+
+# Wire up our API using automatic URL routing.
+# Additionally, we include login URLs for the browsable API.
+urlpatterns = [
+    url(r'^api/v1/', include(router.urls)),
+    url(r'^api/v1/api-auth/', include('rest_framework.urls', namespace='rest_framework'))
+] + urlpatterns
