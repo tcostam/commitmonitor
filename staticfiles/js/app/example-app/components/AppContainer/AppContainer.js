@@ -29,7 +29,7 @@ class AppContainer extends React.Component {
         (result) => {
           this.setState({
             commits: result,
-            modalVisible: (result.lenght > 0),
+            modalVisible: (result.lenght === 0),
           });
         },
         (error) => {
