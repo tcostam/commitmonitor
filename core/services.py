@@ -35,8 +35,8 @@ def create_repository(user_profile, name, access_token):
                                     date=commit.commit.author.date)
 
         # 4. Create webhook
-        hook_configs = { url: '', content_type: 'json', secret: '' }
-        repo.create_hook(name="commitmonitor hook", config=hook_configs, events=["push"], active=True)
+        # hook_configs = { url: '', content_type: 'json', secret: '' }
+        # repo.create_hook(name="commitmonitor hook", config=hook_configs, events=["push"], active=True)
         # 5. Return repository
         return repository
     except UnknownObjectException:

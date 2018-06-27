@@ -1,30 +1,31 @@
+import hmac
+from hashlib import sha1
+
+from django.conf import settings
+from django.utils.encoding import force_bytes
+from django.http import HttpResponse, HttpResponseForbidden, HttpResponseServerError
+from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_POST
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404
+
 from rest_framework import viewsets
-from django.views.decorators.csrf import csrf_exempt
-from django.http import HttpResponse
 from rest_framework.response import Response
+from rest_framework.exceptions import PermissionDenied
+
 from .serializers import UserProfileSerializer, RepositorySerializer, CommitSerializer
 from .models import UserProfile, Repository, Commit
-from rest_framework.exceptions import PermissionDenied
-from rest_framework_extensions.mixins import NestedViewSetMixin
-from .services import *
+from .services import create_repository
+
 
 # ViewSets
 class UserProfileViewSet(viewsets.ModelViewSet):
     queryset = UserProfile.objects.all()
     serializer_class = UserProfileSerializer
 
-class RepositoryViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
+class RepositoryViewSet(viewsets.ModelViewSet):
     queryset = Repository.objects.all()
     serializer_class = RepositorySerializer
-
-    def commits(self, request, pk=None):
-        queryset = Repository.objects.all()
-        repository = get_object_or_404(queryset, pk=pk, user_profile=request.user.userprofile)
-        commits = repository.commits
-        serializer = CommitSerializer(queryset, many=True)
-        return Response(serializer.data)
 
     def list(self, request):
         queryset = request.user.userprofile.repositories
@@ -74,6 +75,33 @@ def home(request):
     }
     return render(request, 'core/home.html', context)
 
+@require_POST
 @csrf_exempt
 def hook(request):
-    return HttpResponse('pong')
+    # Verify the request signature
+    header_signature = request.META.get('HTTP_X_HUB_SIGNATURE')
+    if header_signature is None:
+        return HttpResponseForbidden('Permission denied.')
+
+    sha_name, signature = header_signature.split('=')
+    if sha_name != 'sha1':
+        return HttpResponseServerError('Operation not supported.', status=501)
+
+    mac = hmac.new(force_bytes(settings.GITHUB_WEBHOOK_KEY), msg=force_bytes(request.body), digestmod=sha1)
+    if not hmac.compare_digest(force_bytes(mac.hexdigest()), force_bytes(signature)):
+        return HttpResponseForbidden('Permission denied.')
+
+    # Process GitHub events
+    event = request.META.get('HTTP_X_GITHUB_EVENT', 'ping')
+
+    if event == 'ping':
+        return HttpResponse('pong')
+    elif event == 'push':
+        # XXX TODO
+        print(">>>>>>>")
+        print(request.__dict__)
+
+        return HttpResponse('success')
+
+    # neither a ping or push
+    return HttpResponse(status=204)

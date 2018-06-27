@@ -22,7 +22,7 @@ ADMINS = (
     ('Tiago Melo', 'tiagodacostamelo@gmail.com'),
 )
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -162,3 +162,6 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAuthenticated'
     ]
 }
+
+# Github
+GITHUB_WEBHOOK_KEY = config('GITHUB_WEBHOOK_KEY')

@@ -25,7 +25,7 @@ DATABASES = {
 
 DATABASES['default']['ATOMIC_REQUESTS'] = True
 
-ALLOWED_HOSTS = ['commitmonitor.herokuapp.com'] # XXX
+ALLOWED_HOSTS = ['commitmonitor.herokuapp.com']
 
 STATIC_ROOT = base_dir_join('staticfiles')
 STATIC_URL = '/static/'
