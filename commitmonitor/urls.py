@@ -17,9 +17,8 @@ urlpatterns = [
     url(r'^login/$', auth_views.login, name='login'),
     url(r'^logout/$', auth_views.logout, name='logout'),
     url(r'^oauth/', include('social_django.urls', namespace='social')),
-    url(r'^admin/', admin.site.urls),
+    url(r'^hooks/$', core_views.hook, name='hook'),
     url(r'^jsreverse/$', django_js_reverse.views.urls_js, name='js_reverse'),
-    # url(r'^$', TemplateView.as_view(template_name='exampleapp/home.html'), name='home'),
 ]
 
 if settings.DEBUG:

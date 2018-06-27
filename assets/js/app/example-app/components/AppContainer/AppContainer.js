@@ -59,6 +59,7 @@ class AppContainer extends React.Component {
             modalVisible: (result.length === 0 || false),
             selectedRepository: repositoryName,
           });
+          window.scrollTo(0, 0);
         },
         (error) => {
           this.setState({
@@ -81,6 +82,7 @@ class AppContainer extends React.Component {
             modalVisible: (result.length === 0 || false),
             selectedRepository: null,
           });
+          window.scrollTo(0, 0);
         },
         (error) => {
           this.setState({

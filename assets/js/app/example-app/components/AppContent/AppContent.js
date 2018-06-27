@@ -38,7 +38,7 @@ class AppContent extends React.Component {
               </thead>
               <tbody>
                 {this.props.commits.map(item => <tr key={item.id}>
-                  <th>{item.sha}</th>
+                  <th><a href={item.github_html_url} target="_blank">{item.sha}</a></th>
                   <th>{item.message}</th>
                   <th className="repository" onClick={this.props.onViewRepositoryClick} >{item.repository.name}</th>
                   <th>{item.github_author_name}</th>

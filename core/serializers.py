@@ -19,4 +19,4 @@ class CommitSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Commit
-        fields = ('id', 'sha', 'message', 'github_author_name', 'date', 'repository')
+        fields = ('id', 'sha', 'message', 'github_author_name', 'github_html_url', 'date', 'repository')

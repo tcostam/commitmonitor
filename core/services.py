@@ -33,7 +33,11 @@ def create_repository(user_profile, name, access_token):
                                     github_author_name=str(commit.commit.author.name or ''),
                                     message=str(commit.commit.message or ''),
                                     date=commit.commit.author.date)
-        # 4. Return repository
+
+        # 4. Create webhook
+        hook_configs = { url: '', content_type: 'json', secret: '' }
+        repo.create_hook(name="commitmonitor hook", config=hook_configs, events=["push"], active=True)
+        # 5. Return repository
         return repository
     except UnknownObjectException:
         raise NotFound("Repository not found.")

@@ -1,6 +1,8 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404
 from rest_framework import viewsets
+from django.views.decorators.csrf import csrf_exempt
+from django.http import HttpResponse
 from rest_framework.response import Response
 from .serializers import UserProfileSerializer, RepositorySerializer, CommitSerializer
 from .models import UserProfile, Repository, Commit
@@ -72,4 +74,6 @@ def home(request):
     }
     return render(request, 'core/home.html', context)
 
-
+@csrf_exempt
+def hook(request):
+    return HttpResponse('pong')

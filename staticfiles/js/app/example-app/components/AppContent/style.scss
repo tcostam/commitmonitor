@@ -35,6 +35,10 @@
         > th {
           font-weight: normal;
 
+          a {
+            color: inherit;
+          }
+
           &.repository {
             cursor: pointer;
 
