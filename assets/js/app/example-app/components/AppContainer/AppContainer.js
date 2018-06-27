@@ -21,14 +21,14 @@ class AppContainer extends React.Component {
   }
 
   componentDidMount() {
-    fetch('/api/v1/repositories/?format=json', {
+    fetch('/api/v1/commits/?format=json', {
       credentials: 'include',
     })
       .then(res => res.json())
       .then(
         (result) => {
           this.setState({
-            repositories: result,
+            commits: result,
             modalVisible: (result.lenght > 0),
           });
         },
@@ -47,7 +47,7 @@ class AppContainer extends React.Component {
         <TopNavbar />
         <AppContent
           onAddRepositoryClick={() => this.setState({ modalVisible: true })}
-          commits={this.state.repositories}
+          commits={this.state.commits}
         />
         <RepositoryModal
           onHideRepositoryClick={() => this.setState({ modalVisible: false })}

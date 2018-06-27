@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import cookie from 'react-cookies';
 
 import './style.scss';
 
@@ -8,8 +9,37 @@ class RepositoryModal extends Component {
     super(props);
 
     this.state = {
-      repositoryName: 'tcostam/',
+      repositoryName: context.login + '/',
+      errorMessage: '',
     };
+
+    this.saveRepositoryClickHandler = this.saveRepositoryClickHandler.bind(this);
+  }
+
+  saveRepositoryClickHandler(event) {
+    event.preventDefault();
+    const csrftoken = cookie.load('csrftoken');
+
+    fetch('/api/v1/repositories/?format=json', {
+      credentials: 'include',
+      method: 'POST',
+      headers: {
+        'X-CSRFToken': csrftoken,
+        'X-Requested-With': 'XMLHttpRequest',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ name: this.state.repositoryName.replace(context.login + '/', '') }),
+    })
+    .then(
+      (result) => {
+        if (!result.ok) {
+          // XXX TODO Treat different errors and messages
+          this.setState({ errorMessage: "Error adding repository." });
+        } else {
+          this.props.onHideRepositoryClick();
+        }
+      },
+    );
   }
 
   render() {
@@ -26,9 +56,9 @@ class RepositoryModal extends Component {
                 onChange={event => this.setState({ repositoryName: event.target.value })}
               />
             </div>
-            <div className="message">repository not found.</div>
+            <div className="message">{this.state.errorMessage}</div>
             <div className="buttons">
-              <div className="button">Save</div>
+              <div className="button" onClick={this.saveRepositoryClickHandler} >Save</div>
               <div className="button -red" onClick={this.props.onHideRepositoryClick}>Cancel</div>
             </div>
           </div>

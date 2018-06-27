@@ -36,6 +36,7 @@ psutil = "*"
 ipython = "*"
 social-auth-app-django = "*"
 djangorestframework = "*"
+pygithub = "*"
 
 [requires]
 python_version = "3.6"

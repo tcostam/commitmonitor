@@ -1,4 +1,5 @@
 import React from 'react';
+import Moment from 'moment';
 
 import './style.scss';
 
@@ -12,6 +13,8 @@ class AppContent extends React.Component {
   }
 
   render() {
+    Moment.locale('pt-br');
+
     return (
       <div className="app-content">
         <div className="container">
@@ -23,7 +26,8 @@ class AppContent extends React.Component {
           </div>
 
           <ul>
-            {this.props.commits.map(item => <li key={item.id}>{item.name}</li>)}
+            {this.props.commits.map(item => <li key={item.id}>{item.sha},
+              {item.message}, {item.repository.name}, {item.github_author_name}, {Moment(item.date).format('MM/DD/YYYY')}</li>)}
           </ul>
         </div>
       </div>

@@ -4,7 +4,6 @@ from django.contrib import admin
 from core import views as core_views
 from django.views.generic import TemplateView
 from django.contrib.auth import views as auth_views
-from core.models import UserProfile, Repository
 
 from rest_framework import routers
 from core import views as api_views
@@ -33,6 +32,7 @@ if settings.DEBUG:
 router = routers.DefaultRouter()
 router.register(r'userprofiles', api_views.UserProfileViewSet)
 router.register(r'repositories', api_views.RepositoryViewSet)
+router.register(r'commits', api_views.CommitViewSet)
 
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browsable API.

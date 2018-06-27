@@ -2,10 +2,10 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404
 from rest_framework import viewsets
 from rest_framework.response import Response
-from .serializers import UserProfileSerializer, RepositorySerializer
-from .models import UserProfile, Repository
+from .serializers import UserProfileSerializer, RepositorySerializer, CommitSerializer
+from .models import UserProfile, Repository, Commit
 from rest_framework.exceptions import PermissionDenied
-
+from .services import *
 
 # ViewSets
 class UserProfileViewSet(viewsets.ModelViewSet):
@@ -28,11 +28,9 @@ class RepositoryViewSet(viewsets.ModelViewSet):
         return Response(serializer.data)
 
     def create(self, request):
-        # 1. Check if there is a repository in users github
-        # 2. Create repository with all information gathered
-        # 3. Get last 30 days commits
-        # 4. Return repository or error
-        repository = Repository.objects.create(user_profile=request.user.userprofile, name=request._data['name'])
+        repository = create_repository(user_profile=request.user.userprofile,
+                            name=request._data['name'],
+                            access_token=request.user.social_auth.get(provider='github').extra_data['access_token'])
         serializer = RepositorySerializer(repository)
         return Response(serializer.data)
 
@@ -45,12 +43,21 @@ class RepositoryViewSet(viewsets.ModelViewSet):
     def destroy(self, request, pk=None):
         pass
 
+class CommitViewSet(viewsets.ModelViewSet):
+    queryset = Commit.objects.all()
+    serializer_class = CommitSerializer
+
+    def list(self, request):
+        # XXX DONE commits where repository belongs to user
+        queryset = Commit.objects.filter(repository__user_profile=request.user.userprofile).order_by('-date')
+        serializer = CommitSerializer(queryset, many=True)
+        return Response(serializer.data)
+
 @login_required
 def home(request):
-    # print(request.user.social_auth.get(provider='github').extra_data)
-
     context = {
-        'avatar':request.user.userprofile.github_avatar_url
+        'avatar':request.user.userprofile.github_avatar_url,
+        'login':request.user.userprofile.github_login,
     }
     return render(request, 'core/home.html', context)
 
