@@ -29,7 +29,7 @@ class AppContainer extends React.Component {
         (result) => {
           this.setState({
             commits: result,
-            modalVisible: (result.lenght === 0),
+            modalVisible: (result.length === 0 || false),
           });
         },
         (error) => {
@@ -52,7 +52,7 @@ class AppContainer extends React.Component {
         <RepositoryModal
           onHideRepositoryClick={() => this.setState({ modalVisible: false })}
           modalVisible={this.state.modalVisible}
-        />
+          />
       </div>
     );
   }

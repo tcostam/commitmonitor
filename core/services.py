@@ -10,7 +10,7 @@ def create_repository(user_profile, name, access_token):
         if Repository.objects.filter(name=name, user_profile=user_profile).count() > 0:
             raise ValidationError("Repository already added.")
 
-        # 1. Check if there is a repository in users github
+        # 1. Check if there is a repository in user's github
         repo = g.get_user().get_repo(name)
         # 2. Create repository with all information gathered
         repository = Repository.objects.create(user_profile=user_profile,
@@ -21,6 +21,8 @@ def create_repository(user_profile, name, access_token):
                                                 owner_github_login=str(repo.owner.login or ''),
                                                 owner_avatar_url=str(repo.owner.avatar_url or ''))
         # 3. Get last 30 days commits
+        # XXX TODO: Move to a Celery task and retry on each commit create?
+        # XXX Maybe it won't be needed as we make a single request to gh.
         delta = datetime.timedelta(days=30)
         one_month_ago = datetime.datetime.today() - delta
         commits = repo.get_commits(since=one_month_ago)
@@ -31,7 +33,7 @@ def create_repository(user_profile, name, access_token):
                                     github_author_name=str(commit.commit.author.name or ''),
                                     message=str(commit.commit.message or ''),
                                     date=commit.commit.author.date)
-        # 4. Return repository or error
+        # 4. Return repository
         return repository
     except UnknownObjectException:
         raise NotFound("Repository not found.")
