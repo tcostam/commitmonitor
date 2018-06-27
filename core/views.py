@@ -5,6 +5,7 @@ from rest_framework.response import Response
 from .serializers import UserProfileSerializer, RepositorySerializer, CommitSerializer
 from .models import UserProfile, Repository, Commit
 from rest_framework.exceptions import PermissionDenied
+from rest_framework_extensions.mixins import NestedViewSetMixin
 from .services import *
 
 # ViewSets
@@ -12,9 +13,16 @@ class UserProfileViewSet(viewsets.ModelViewSet):
     queryset = UserProfile.objects.all()
     serializer_class = UserProfileSerializer
 
-class RepositoryViewSet(viewsets.ModelViewSet):
+class RepositoryViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
     queryset = Repository.objects.all()
     serializer_class = RepositorySerializer
+
+    def commits(self, request, pk=None):
+        queryset = Repository.objects.all()
+        repository = get_object_or_404(queryset, pk=pk, user_profile=request.user.userprofile)
+        commits = repository.commits
+        serializer = CommitSerializer(queryset, many=True)
+        return Response(serializer.data)
 
     def list(self, request):
         queryset = request.user.userprofile.repositories
@@ -48,8 +56,11 @@ class CommitViewSet(viewsets.ModelViewSet):
     serializer_class = CommitSerializer
 
     def list(self, request):
-        # XXX DONE commits where repository belongs to user
         queryset = Commit.objects.filter(repository__user_profile=request.user.userprofile).order_by('-date')
+
+        repository_name = self.request.query_params.get('repository', None)
+        if repository_name is not None:
+            queryset = queryset.filter(repository__name=repository_name)
         serializer = CommitSerializer(queryset, many=True)
         return Response(serializer.data)
 

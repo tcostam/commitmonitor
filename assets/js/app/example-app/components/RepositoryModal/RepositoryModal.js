@@ -37,6 +37,7 @@ class RepositoryModal extends Component {
           this.setState({ errorMessage: "Error adding repository." });
         } else {
           this.props.onHideRepositoryClick();
+          this.props.reloadCommits();
         }
       },
     );

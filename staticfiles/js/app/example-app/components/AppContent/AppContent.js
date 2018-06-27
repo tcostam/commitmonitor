@@ -1,6 +1,8 @@
 import React from 'react';
 import Moment from 'moment';
 
+import PageHeader from '../PageHeader';
+
 import './style.scss';
 
 class AppContent extends React.Component {
@@ -18,12 +20,11 @@ class AppContent extends React.Component {
     return (
       <div className="app-content">
         <div className="container">
-          <div className="page-header">
-            <div className="text">All Repositories</div>
-            <div className="icon" onClick={this.props.onAddRepositoryClick}>
-              <img src={"/static/images/addRepoImage.png"} srcSet={`${"/static/images/addRepoImage@2x.png"} 2x`} />
-            </div>
-          </div>
+          <PageHeader selectedRepository={this.props.selectedRepository}
+            onAddRepositoryClick={this.props.onAddRepositoryClick}
+            onExitRepositoryClick={this.props.onExitRepositoryClick}
+          />
+
           <div className="commits-table">
             <table className="table">
               <thead>
@@ -39,7 +40,7 @@ class AppContent extends React.Component {
                 {this.props.commits.map(item => <tr key={item.id}>
                   <th>{item.sha}</th>
                   <th>{item.message}</th>
-                  <th>{item.repository.name}</th>
+                  <th className="repository" onClick={this.props.onViewRepositoryClick} >{item.repository.name}</th>
                   <th>{item.github_author_name}</th>
                   <th>{Moment(item.date).format('MM/DD/YYYY')}</th>
                 </tr>)}

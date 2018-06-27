@@ -1,0 +1,28 @@
+.page-header {
+  > .back {
+    display: inline-block;
+    font-family: LucidaGrande;
+    font-size: 29px;
+    line-height: 29px;
+    font-weight: 500;
+    color: #777777;
+    cursor: pointer;
+    margin-right: 12px;
+  }
+
+  > .text {
+    font-family: DINNextLTPro;
+    font-size: 29px;
+    font-weight: 500;
+    color: #777777;
+    display: inline-block;
+  }
+
+  > .icon {
+    bottom: 4px;
+    position: relative;
+    margin-left: 12px;
+    cursor: pointer;
+    display: inline-block;
+  }
+}

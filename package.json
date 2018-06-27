@@ -67,6 +67,7 @@
     "react-cookie": "^2.2.0",
     "react-cookies": "^0.1.0",
     "react-dom": "^15.6.2",
+    "react-text-mask": "^5.4.2",
     "redux": "^3.7.2",
     "resolve-url-loader": "^2.3.0",
     "sass-loader": "^6.0.7",
