@@ -1,4 +1,5 @@
 import hmac
+import json
 from hashlib import sha1
 
 from django.conf import settings
@@ -97,9 +98,21 @@ def hook(request):
     if event == 'ping':
         return HttpResponse('pong')
     elif event == 'push':
-        # XXX TODO
-        print(">>>>>>>")
-        print(request.__dict__)
+        body_unicode = request.body.decode('utf-8')
+        body = json.loads(body_unicode)
+        commits = body['commits']
+        repository_full_name = body['repository']['full_name']
+
+        queryset = Repository.objects.all()
+        repository = get_object_or_404(queryset, full_name=repository_full_name)
+
+        for commit in commits:
+            Commit.objects.create(repository=repository,
+                                    github_html_url=str(commit['url'] or ''),
+                                    sha=commit['id'],
+                                    github_author_name=str(commit['author']['name'] or ''),
+                                    message=str(commit['message'] or ''),
+                                    date=commit['timestamp'])
 
         return HttpResponse('success')
 

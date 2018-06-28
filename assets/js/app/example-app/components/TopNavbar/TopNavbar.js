@@ -27,6 +27,10 @@ class TopNavbar extends React.Component {
           <div className="avatar">
             <div className="image" style={avatarStyle}>
             </div>
+            <div className="logout">
+              <div className="triangle" />
+              <a href="/logout">Logout</a
+            ></div>
           </div>
         </div>
       </div>

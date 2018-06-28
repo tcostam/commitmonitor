@@ -23,6 +23,8 @@ DATABASES = {
 #     }
 # }
 
+APP_BASE_URL = 'https://commitmonitor.herokuapp.com'
+
 DATABASES['default']['ATOMIC_REQUESTS'] = True
 
 ALLOWED_HOSTS = ['commitmonitor.herokuapp.com']

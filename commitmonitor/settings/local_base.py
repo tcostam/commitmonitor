@@ -19,6 +19,8 @@ DATABASES = {
     }
 }
 
+APP_BASE_URL = 'http://127.0.0.1'
+
 STATIC_ROOT = base_dir_join('staticfiles')
 STATIC_URL = '/static/'
 

@@ -151,6 +151,10 @@ SOCIAL_AUTH_PIPELINE = (
     'core.pipeline.save_profile',
 )
 
+SOCIAL_AUTH_GITHUB_SCOPE = [
+    'admin:repo_hook',
+]
+
 # Django REST framework
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (

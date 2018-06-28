@@ -1,7 +1,9 @@
 from github import Github, GithubException, UnknownObjectException
 from .models import UserProfile, Repository, Commit
 from rest_framework.exceptions import NotFound, ValidationError
+from django.conf import settings
 import datetime
+
 
 def create_repository(user_profile, name, access_token):
     g = Github(access_token)
@@ -35,11 +37,16 @@ def create_repository(user_profile, name, access_token):
                                     date=commit.commit.author.date)
 
         # 4. Create webhook
-        # hook_configs = { url: '', content_type: 'json', secret: '' }
-        # repo.create_hook(name="commitmonitor hook", config=hook_configs, events=["push"], active=True)
+        hook_configs = {}
+        hook_configs['url'] = settings.APP_BASE_URL + '/hooks/'
+        hook_configs['content_type'] = 'json'
+        hook_configs['secret'] = settings.GITHUB_WEBHOOK_KEY
+        repo.create_hook(name="web", config=hook_configs, events=["push"], active=True)
+
         # 5. Return repository
         return repository
     except UnknownObjectException:
         raise NotFound("Repository not found.")
+
 
 
