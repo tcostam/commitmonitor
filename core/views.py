@@ -40,9 +40,10 @@ class RepositoryViewSet(viewsets.ModelViewSet):
         return Response(serializer.data)
 
     def create(self, request):
-        repository = create_repository(user_profile=request.user.userprofile,
+        github_token = request.user.social_auth.get(provider='github').extra_data['access_token']
+        repository = create_repository(user_profile_id=request.user.userprofile.id,
                             name=request._data['name'],
-                            access_token=request.user.social_auth.get(provider='github').extra_data['access_token'])
+                            github_token=github_token)
         serializer = RepositorySerializer(repository)
         return Response(serializer.data)
 

@@ -5,10 +5,11 @@ from django.conf import settings
 import datetime
 
 
-def create_repository(user_profile, name, access_token):
-    g = Github(access_token)
+def create_repository(user_profile_id, name, github_token):
+    g = Github(github_token)
     try:
         # 0. Check if repository already exists.
+        user_profile = UserProfile.objects.get(pk=user_profile_id)
         if Repository.objects.filter(name=name, user_profile=user_profile).count() > 0:
             raise ValidationError("Repository already added.")
 
