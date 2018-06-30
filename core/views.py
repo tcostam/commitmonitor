@@ -16,7 +16,7 @@ from rest_framework.exceptions import PermissionDenied
 
 from .serializers import UserProfileSerializer, RepositorySerializer, CommitSerializer
 from .models import UserProfile, Repository, Commit
-from .services import create_repository
+from .services import create_repository, PaginationService
 
 
 # ViewSets
@@ -66,8 +66,15 @@ class CommitViewSet(viewsets.ModelViewSet):
         repository_name = self.request.query_params.get('repository', None)
         if repository_name is not None:
             queryset = queryset.filter(repository__name=repository_name)
-        serializer = CommitSerializer(queryset, many=True)
-        return Response(serializer.data)
+
+        current_page = request.META.get('HTTP_X_CURRENT_PAGE', 0)
+        per_page = request.META.get('HTTP_X_PER_PAGE', 10)
+
+        pagination = PaginationService(items=queryset, current_page=current_page, per_page=per_page)
+        paginated_items = pagination.page_items
+
+        serializer = CommitSerializer(paginated_items, many=True)
+        return Response(serializer.data, headers=pagination.header_params)
 
 @login_required
 def home(request):

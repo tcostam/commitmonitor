@@ -2,6 +2,7 @@ import React from 'react';
 import Moment from 'moment';
 
 import PageHeader from '../PageHeader';
+import PageSelector from '../PageSelector';
 
 import './style.scss';
 
@@ -48,6 +49,11 @@ class AppContent extends React.Component {
             </table>
           </div>
 
+          <PageSelector
+            currentPage={this.props.currentPage}
+            pagesCount={this.props.pagesCount}
+            onPageSelectClick={this.props.onPageSelectClick}
+          />
         </div>
       </div>
     );
