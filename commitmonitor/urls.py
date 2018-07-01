@@ -8,17 +8,16 @@ from django.contrib.auth import views as auth_views
 from rest_framework import routers
 from core import views as api_views
 
-
 import django_js_reverse.views
 
 
 urlpatterns = [
-    url(r'^$', core_views.home, name='home'),
     url(r'^login/$', auth_views.login, name='login'),
     url(r'^logout/$', auth_views.logout, name='logout'),
     url(r'^oauth/', include('social_django.urls', namespace='social')),
     url(r'^hooks/$', core_views.hook, name='hook'),
     url(r'^jsreverse/$', django_js_reverse.views.urls_js, name='js_reverse'),
+    url(r'^$', core_views.home, name='home'),
 ]
 
 if settings.DEBUG:
@@ -29,12 +28,9 @@ if settings.DEBUG:
 
 # Routers
 router = routers.DefaultRouter()
-router.register(r'userprofiles', api_views.UserProfileViewSet)
 router.register(r'repositories', api_views.RepositoryViewSet)
 router.register(r'commits', api_views.CommitViewSet)
 
-# Wire up our API using automatic URL routing.
-# Additionally, we include login URLs for the browsable API.
 urlpatterns = [
     url(r'^api/v1/', include(router.urls)),
     url(r'^api/v1/api-auth/', include('rest_framework.urls', namespace='rest_framework'))

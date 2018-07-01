@@ -20,7 +20,7 @@ class AppContainer extends React.Component {
       modalVisible: false,
       currentPage: 0,
       perPage: 10,
-      pagesCount: 3,
+      pagesCount: 0,
       itemsCount: 0,
     };
 
@@ -66,6 +66,7 @@ class AppContainer extends React.Component {
     this.setState({
       selectedRepository: null,
       commits: [],
+      currentPage: 0,
       isLoaded: false,
     }, () => {
       this.reloadCommits();

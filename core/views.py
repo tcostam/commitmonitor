@@ -10,53 +10,31 @@ from django.views.decorators.http import require_POST
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404
 
-from rest_framework import viewsets
+from rest_framework import viewsets, mixins
 from rest_framework.response import Response
 from rest_framework.exceptions import PermissionDenied
 
 from .serializers import UserProfileSerializer, RepositorySerializer, CommitSerializer
 from .models import UserProfile, Repository, Commit
-from .services import create_repository, PaginationService
+from .services import CreateRepositoryService, PaginationService
 
 
 # ViewSets
-class UserProfileViewSet(viewsets.ModelViewSet):
-    queryset = UserProfile.objects.all()
-    serializer_class = UserProfileSerializer
-
-class RepositoryViewSet(viewsets.ModelViewSet):
+class RepositoryViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
     queryset = Repository.objects.all()
     serializer_class = RepositorySerializer
 
-    def list(self, request):
-        queryset = request.user.userprofile.repositories
-        serializer = RepositorySerializer(queryset, many=True)
-        return Response(serializer.data)
-
-    def retrieve(self, request, pk=None):
-        queryset = Repository.objects.all()
-        repository = get_object_or_404(queryset, pk=pk, user_profile=request.user.userprofile)
-        serializer = RepositorySerializer(repository)
-        return Response(serializer.data)
-
     def create(self, request):
         github_token = request.user.social_auth.get(provider='github').extra_data['access_token']
-        repository = create_repository(user_profile_id=request.user.userprofile.id,
-                            name=request._data['name'],
+        service = CreateRepositoryService(user_profile_id=request.user.userprofile.id,
                             github_token=github_token)
+        service.create_webhook(name=request._data['name'])
+        repository = service.create_repository(name=request._data['name'])
+
         serializer = RepositorySerializer(repository)
         return Response(serializer.data)
 
-    def update(self, request, pk=None):
-        pass
-
-    def partial_update(self, request, pk=None):
-        pass
-
-    def destroy(self, request, pk=None):
-        pass
-
-class CommitViewSet(viewsets.ModelViewSet):
+class CommitViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
     queryset = Commit.objects.all()
     serializer_class = CommitSerializer
 
@@ -124,5 +102,5 @@ def hook(request):
 
         return HttpResponse('success')
 
-    # neither a ping or push
+    # Neither a ping or push
     return HttpResponse(status=204)

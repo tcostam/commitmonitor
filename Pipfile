@@ -38,6 +38,7 @@ social-auth-app-django = "*"
 djangorestframework = "*"
 pygithub = "*"
 drf-extensions = "*"
+coverage = "*"
 
 [requires]
 python_version = "3.6"

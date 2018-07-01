@@ -4,3 +4,7 @@ omit = */virtualenvs/*
        */migrations/*
        */settings/*
        */tests/*
+       commitmonitor/*
+       common/*
+       manage.py
+       core/apps.py

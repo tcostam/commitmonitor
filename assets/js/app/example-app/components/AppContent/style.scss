@@ -35,6 +35,14 @@
         > th {
           font-weight: normal;
 
+          &:first-of-type {
+            width: 325px;
+          }
+
+          &:last-of-type {
+            width: 110px;
+          }
+
           a {
             color: inherit;
           }
